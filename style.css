@@ -4,6 +4,18 @@
     box-sizing: border-box;
 }
 
+/* styles.css */
+button {
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
 .game-board {
     width: 100%;
     height: 500px;
@@ -37,16 +49,7 @@
     animation: clouds-animations 20s infinite linear;
 }
 
-#restart-button {
-    display: none;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #428bca;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 
 #restart-button:hover {
     background-color: #3071a9;
