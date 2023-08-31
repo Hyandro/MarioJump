@@ -6,7 +6,7 @@ let loop;
 
 const restartGame = () => {
     mario.style.bottom = '0';
-    mario.src = './MARIO PNG/mario.gif';
+    mario.src = 'mario.gif';
     mario.style.width = '40px';
     mario.style.marginLeft = '0';
 
