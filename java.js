@@ -39,7 +39,7 @@ const checkCollision = () => {
         const marioNewPosition = 65; 
         mario.style.bottom = `${marioNewPosition}px`;
 
-        mario.src = './MARIO PNG/game-over.png';
+        mario.src = 'game-over.png';
         mario.style.width = '70px';
         mario.style.marginLeft = '50px';
 
