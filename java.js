@@ -59,3 +59,19 @@ startLoop();
 document.addEventListener('keydown', jump);
 
 restartButton.addEventListener('click', restartGame);
+
+
+const meuBotao = document.getElementById('meuBotao');
+
+meuBotao.addEventListener('click', function() {
+    realizarAcao();
+});
+
+meuBotao.addEventListener('touchstart', function() {
+    realizarAcao();
+});
+
+function realizarAcao() {
+    // Coloque aqui o código que você deseja executar quando o botão for clicado ou tocado.
+    console.log('Ação realizada!');
+}
