@@ -151,10 +151,11 @@ restartBtn.addEventListener('click', startGame);
 
 shareBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(
-`Olha meu recorde no Mario Jump 😎
+`Olha meu recorde no game Mario Jump, será que você bate o meu? 😎
 🏃‍♂️ Score: ${score}
 🧱 Canos: ${cones}
-🏆 Recorde: ${highScore}`
+🏆 Recorde: ${highScore}
+👉 Jogue aqui: https://hyandro.github.io/MarioJump/`
     );
     alert('Mensagem copiada!');
 });
@@ -162,3 +163,4 @@ shareBtn.addEventListener('click', () => {
 document.addEventListener('keydown', jump);
 
 startGame();
+
