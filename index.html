@@ -1,26 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Jump</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="java.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mario Jump</title>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="java.js" defer></script>
 </head>
 <body>
 
+<!-- ===== NOME ===== -->
+<div class="game-over-modal" id="nameModal" style="display:flex;">
+  <div class="modal-content">
+    <h2>🎮 Mario Jump</h2>
+    <p>Digite seu nome para começar</p>
+
+    <input
+      id="playerNameInput"
+      type="text"
+      maxlength="12"
+      placeholder="Seu nome"
+    />
+
+    <div class="modal-buttons">
+      <button id="confirmName">Começar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HUD ===== -->
 <div class="score-board">
-    <div>🏃‍♂️ Score: <strong id="score">0</strong></div>
-    <div>🧱 Canos: <strong id="cones">0</strong></div>
-    <div>🏆 Recorde: <strong id="highScore">0</strong></div>
+  <div>🏃‍♂️ Score: <strong id="score">0</strong></div>
+  <div>🧱 Canos: <strong id="cones">0</strong></div>
+  <div>🏆 Recorde: <strong id="highScore">0</strong></div>
 </div>
 
+<!-- ===== RANKING ===== -->
+<div class="ranking-board">
+  <h4>🏆 Top 5</h4>
+  <ol id="rankingList">
+    <li>Carregando...</li>
+  </ol>
+</div>
+
+<!-- ===== GAME ===== -->
 <div class="game-board">
-    <img src="mario.gif" class="mario">
-    <img src="pipe.png" class="pipe">
-    <img src="clouds.png" class="clouds">
+  <img src="mario.gif" class="mario" />
+  <img src="pipe.png" class="pipe" />
+  <img src="clouds.png" class="clouds" />
 </div>
 
+<!-- ===== GAME OVER ===== -->
 <div class="game-over-modal" id="gameOverModal">
   <div class="modal-content">
     <h2>🏁 Fim de jogo</h2>

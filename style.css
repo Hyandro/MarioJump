@@ -5,6 +5,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ================= GAME BOARD ================= */
 .game-board {
     width: 100%;
     height: 500px;
@@ -41,33 +42,80 @@
     animation: clouds-animations 20s infinite linear;
 }
 
-/* ================= SCORE / HUD ================= */
-/* 👇 EMBAIXO, PERTO DO MARIO */
+/* ================= HUD (SCORE) ================= */
 .score-board {
     position: absolute;
-    bottom: 250px;              /* altura acima do chão */
-    left: 20px;                /* canto esquerdo */
-    font-size: 20px;
+    bottom: 250px;
+    left: 20px;
+
+    font-size: 18px;
     color: #fff;
 
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 6px;
 
     z-index: 10;
     pointer-events: none;
 
-    /* visual */
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.45);
     padding: 10px 14px;
     border-radius: 8px;
+
+    box-shadow: 0 6px 12px rgba(0,0,0,0.35);
 }
 
-/* sombra no texto */
-.score-board p,
-.score-board span {
+.score-board div {
     text-shadow: 2px 2px 0 #000;
+}
+
+/* ================= RANKING ================= */
+.ranking-board {
+    position: absolute;
+    bottom: 250px;
+    right: 20px;
+
+    width: 170px;
+    font-size: 14px;
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    z-index: 10;
+    pointer-events: none;
+
+    background: rgba(0, 0, 0, 0.45);
+    padding: 10px 14px;
+    border-radius: 8px;
+
+    box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+}
+
+.ranking-board h4 {
+    text-align: center;
+    margin-bottom: 6px;
+    font-size: 15px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.ranking-board ol {
+    padding-left: 18px;
+    margin: 0;
+}
+
+.ranking-board li {
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 2px 2px 0 #000;
+}
+
+/* Destaque do Top 1 */
+.ranking-board li:first-child {
+    font-weight: bold;
 }
 
 /* ================= ANIMAÇÕES ================= */
@@ -88,7 +136,7 @@
     }
 }
 
-/* ================= MODAL GAME OVER ================= */
+/* ================= MODAIS ================= */
 .game-over-modal {
     position: fixed;
     inset: 0;
@@ -106,6 +154,8 @@
     text-align: center;
     color: #fff;
     min-width: 280px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .modal-content h2 {
