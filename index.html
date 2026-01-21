@@ -1,76 +1,114 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mario Jump</title>
+  <head>
+    <meta charset="UTF-8" />
 
-  <link rel="stylesheet" href="style.css"/>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-  <script src="java.js" defer></script>
-</head>
-<body>
-
-<!-- ===== NOME ===== -->
-<div class="game-over-modal" id="nameModal" style="display:flex;">
-  <div class="modal-content">
-    <h2>🎮 Mario Jump</h2>
-    <p>Digite seu nome para começar</p>
-
-    <input
-      id="playerNameInput"
-      type="text"
-      maxlength="12"
-      placeholder="Seu nome"
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"
     />
 
-    <div class="modal-buttons">
-      <button id="confirmName">Começar</button>
+    <title>Mario Jump</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script src="java.js" defer></script>
+  </head>
+  <body>
+    <!-- ===== NOME ===== -->
+    <div class="game-over-modal" id="nameModal" style="display: flex">
+      <div class="modal-content">
+        <h2>🎮 Mario Jump</h2>
+        <p>Digite seu nome para começar</p>
+
+        <input
+          id="playerNameInput"
+          type="text"
+          maxlength="12"
+          placeholder="Seu nome"
+        />
+
+        <div class="modal-buttons">
+          <button id="confirmName">Começar</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- ===== HUD ===== -->
-<div class="score-board">
-  <div>🏃‍♂️ Score: <strong id="score">0</strong></div>
-  <div>🧱 Canos: <strong id="cones">0</strong></div>
-  <div>🏆 Recorde: <strong id="highScore">0</strong></div>
-</div>
-
-<!-- ===== RANKING ===== -->
-<div class="ranking-board">
-  <h4>🏆 Top 5</h4>
-  <ol id="rankingList">
-    <li>Carregando...</li>
-  </ol>
-</div>
-
-<!-- ===== GAME ===== -->
-<div class="game-board">
-  <img src="mario.gif" class="mario" />
-  <img src="pipe.png" class="pipe" />
-  <img src="clouds.png" class="clouds" />
-</div>
-
-<!-- ===== GAME OVER ===== -->
-<div class="game-over-modal" id="gameOverModal">
-  <div class="modal-content">
-    <h2>🏁 Fim de jogo</h2>
-
-    <p>🏃‍♂️ Score: <strong id="finalScore">0</strong></p>
-    <p>🧱 Canos: <strong id="finalCones">0</strong></p>
-    <p>🏆 Recorde: <strong id="finalHighScore">0</strong></p>
-
-    <div class="modal-buttons">
-      <button id="restartGame">Reiniciar</button>
-      <button id="shareGame">Compartilhar</button>
+    <!-- ===== HUD ===== -->
+    <div class="score-board">
+      <div>🏃‍♂️ <strong id="score">0</strong></div>
+      <div>🧱 <strong id="cones">0</strong></div>
+      <div>🏆 <strong id="highScore">0</strong></div>
     </div>
-  </div>
-</div>
 
-</body>
+    <!-- ===== RANKING ===== -->
+    <div class="ranking-board">
+      <h4>🏆 Top 5</h4>
+      <ol id="rankingList">
+        <li>Carregando...</li>
+      </ol>
+    </div>
+
+    <!-- ===== GAME ===== -->
+    <div class="game-board">
+      <!-- Área de toque mobile -->
+      <div class="touch-zone"></div>
+
+      <img src="mario.gif" class="mario" />
+      <img src="pipe.png" class="pipe" />
+      <img src="clouds.png" class="clouds" />
+    </div>
+
+    <!-- ===== GAME OVER ===== -->
+    <div class="game-over-modal" id="gameOverModal">
+      <div class="modal-content">
+        <h2>🏁 Fim de jogo</h2>
+
+        <p>🏃‍♂️ Score: <strong id="finalScore">0</strong></p>
+        <p>🧱 Canos: <strong id="finalCones">0</strong></p>
+        <p>🏆 Recorde: <strong id="finalHighScore">0</strong></p>
+
+        <div class="modal-buttons">
+          <button id="restartGame">Reiniciar</button>
+          <button id="shareGame">Compartilhar</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
+
+<div class="game-over-modal" id="gameOverModal">
+  <div class="modal-content" style="display: flex; flex-direction: column; align-items: center; min-width: 320px;">
+    <h2 style="margin-bottom: 10px;">🏁 Fim de jogo</h2>
+
+    <div style="margin-bottom: 15px;">
+        <p>🏃‍♂️ Score: <strong id="finalScore">0</strong></p>
+        <p>🧱 Canos: <strong id="finalCones">0</strong></p>
+        <p>🏆 Recorde: <strong id="finalHighScore">0</strong></p>
+    </div>
+
+    <div id="feedbackContainer" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; width: 100%; margin-bottom: 20px; display: block !important;">
+      <p style="margin-bottom: 10px; font-weight: bold; color: #fff;">Avalie para continuar:</p>
+      
+      <div class="stars" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+        <span class="star-btn" data-val="1" style="font-size: 35px; cursor: pointer; color: #ccc; transition: 0.2s;">★</span>
+        <span class="star-btn" data-val="2" style="font-size: 35px; cursor: pointer; color: #ccc; transition: 0.2s;">★</span>
+        <span class="star-btn" data-val="3" style="font-size: 35px; cursor: pointer; color: #ccc; transition: 0.2s;">★</span>
+        <span class="star-btn" data-val="4" style="font-size: 35px; cursor: pointer; color: #ccc; transition: 0.2s;">★</span>
+        <span class="star-btn" data-val="5" style="font-size: 35px; cursor: pointer; color: #ccc; transition: 0.2s;">★</span>
+      </div>
+
+      <textarea id="feedbackMsg" placeholder="O que podemos melhorar?" style="width: 100%; height: 60px; border-radius: 8px; border: none; padding: 10px; color: #333; font-size: 14px; resize: none;"></textarea>
+    </div>
+
+    <div class="modal-buttons">
+      <button id="restartGame" disabled style="background: #2ecc71; color: #fff; opacity: 0.4; cursor: not-allowed;">Reiniciar</button>
+      <button id="shareGame" disabled style="background: #f1c40f; color: #000; opacity: 0.4; cursor: not-allowed;">Compartilhar</button>
+    </div>
+  </div>
+</div>
