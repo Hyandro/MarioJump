@@ -291,68 +291,11 @@ confirmNameBtn.addEventListener("click", () => {
 restartBtn.addEventListener("click", startGame);
 
 shareBtn.addEventListener("click", () => {
-  navigator.clipboard.writeText(`Olha meu recorde no Mario Jump 😎\n👤 ${playerName}\n🏃‍♂️ Score: ${score}\n👉 https://hyandro.github.io/mariojumpcelularteste/`);
+  navigator.clipboard.writeText(`Olha meu recorde no Mario Jump 😎\n👤 ${playerName}\n🏃‍♂️ Score: ${score}\n👉 https://hyandro.github.io/mariojump/`);
   alert("Mensagem copiada!");
 });
 
 loadRanking();
-
-// === SISTEMA DE FEEDBACK OBRIGATÓRIO ===
-const feedbackStars = document.querySelectorAll(".star-btn");
-const feedbackMsg = document.getElementById("feedbackMsg");
-let userRating = 0;
-
-// Função que checa se os botões podem ser liberados
-function checkRequirements() {
-  const text = feedbackMsg.value.trim();
-  if (userRating > 0 && text.length >= 3) {
-    // Libera os botões
-    restartBtn.disabled = false;
-    shareBtn.disabled = false;
-    restartBtn.style.opacity = "1";
-    restartBtn.style.cursor = "pointer";
-    shareBtn.style.opacity = "1";
-    shareBtn.style.cursor = "pointer";
-  } else {
-    // Mantém travado
-    restartBtn.disabled = true;
-    shareBtn.disabled = true;
-    restartBtn.style.opacity = "0.4";
-    shareBtn.style.opacity = "0.4";
-  }
-}
-
-// Lógica das estrelas
-feedbackStars.forEach(star => {
-  star.addEventListener("click", () => {
-    userRating = star.getAttribute("data-val");
-    
-    // Pinta as estrelas de amarelo
-    feedbackStars.forEach(s => {
-      if (s.getAttribute("data-val") <= userRating) {
-        s.style.color = "#f1c40f";
-      } else {
-        s.style.color = "#ccc";
-      }
-    });
-    checkRequirements();
-  });
-});
-
-// Lógica do texto
-feedbackMsg.addEventListener("input", checkRequirements);
-
-// Botão Reiniciar (Reseta o feedback e volta o jogo)
-restartBtn.addEventListener("click", () => {
-  // Limpa o feedback para a próxima morte
-  userRating = 0;
-  feedbackMsg.value = "";
-  feedbackStars.forEach(s => s.style.color = "#ccc");
-  restartBtn.disabled = true;
-  shareBtn.disabled = true;
-  
-  startGame(); // Chama sua função existente
-});
 
 // Botão Compartilhar
 shareBtn.addEventListener("click", () => {
