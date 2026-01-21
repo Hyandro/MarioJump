@@ -60,18 +60,9 @@ git clone https://github.com/Hyandro/MarioJump.git
 
 ---
 
-## 📌 Próximas melhorias (ideias)
-
-* Sistema de pontuação com recorde
-* Níveis de dificuldade
-* Versão mobile otimizada
-* Sons configuráveis (mute/volume)
-
----
-
 ## 👤 Autor
 
-Desenvolvido por **Hyardro**
+Desenvolvido por **Hyandro Phillipe**
 📍 Brasil
 💻 Estudante de Análise e Desenvolvimento de Sistemas
 
