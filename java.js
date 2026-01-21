@@ -291,7 +291,7 @@ confirmNameBtn.addEventListener("click", () => {
 restartBtn.addEventListener("click", startGame);
 
 shareBtn.addEventListener("click", () => {
-  navigator.clipboard.writeText(`Olha meu recorde no Mario Jump 😎\n👤 ${playerName}\n🏃‍♂️ Score: ${score}\n👉 https://hyandro.github.io/mariojump/`);
+  navigator.clipboard.writeText(`Olha meu recorde no Mario Jump 😎\n👤 ${playerName}\n🏃‍♂️ Score: ${score}\n👉 https://hyandro.github.io/MarioJump/`);
   alert("Mensagem copiada!");
 });
 
@@ -302,3 +302,4 @@ shareBtn.addEventListener("click", () => {
   navigator.clipboard.writeText(`Olha meu recorde no Mario Jump 😎\n👤 ${playerName}\n🏃‍♂️ Score: ${score}\n👉 https://hyandro.github.io/mariojumpcelularteste/`);
   alert("Mensagem copiada!");
 });
+
