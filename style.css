@@ -1,0 +1,976 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== GAME BOARD ===== */
+.game-board {
+  width: 100%;
+  height: 100svh;
+  max-height: 100vh;
+  border-bottom: 15px solid #2ca372;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(#87ceeb, #e0f6ff);
+}
+
+/* ===== ELEMENTOS ===== */
+.background-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mountains-container,
+.trees-container,
+.bushes-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== MOEDAS ===== */
+.coins-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.coin {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border-radius: 50%;
+  border: 3px solid #FF8C00;
+  animation: coinFloat 2s ease-in-out infinite, coinMove 15s linear;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #8B4513;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.coin::before {
+  content: '🪙';
+}
+
+@keyframes coinFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+@keyframes coinMove {
+  from { left: 100%; }
+  to { left: -50px; }
+}
+
+.coin.collected {
+  animation: coinCollect 0.5s ease-out forwards;
+}
+
+@keyframes coinCollect {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2) rotate(360deg) translateY(-50px);
+    opacity: 0;
+  }
+}
+
+/* ===== INDICADOR POWER-UP ===== */
+.powerup-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 60;
+  display: none;
+  text-align: center;
+  border: 2px solid #FFD700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.powerup-indicator.active {
+  display: block;
+  animation: powerupPulse 2s ease-in-out infinite;
+}
+
+@keyframes powerupPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.pipe {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  left: 100%;
+  will-change: transform;
+  z-index: 10;
+}
+
+.mario {
+  width: 140px;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* ===== MONTANHAS ===== */
+.mountain {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 200px solid rgba(76, 175, 80, 0.3);
+  animation: mountainMove 40s linear infinite;
+  filter: blur(1px);
+}
+
+.mountain::before {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: -70px;
+  width: 0;
+  height: 0;
+  border-left: 70px solid transparent;
+  border-right: 70px solid transparent;
+  border-bottom: 140px solid rgba(56, 142, 60, 0.25);
+}
+
+@keyframes mountainMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100vw); }
+}
+
+.jump {
+  animation: jump 600ms ease-out;
+}
+
+/* ===== ÁRVORES ===== */
+.tree {
+  position: absolute;
+  bottom: 0;
+  animation: treeMove 25s linear infinite;
+}
+
+.tree-trunk {
+  width: 12px;
+  height: 40px;
+  background: #8B4513;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.tree-foliage {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tree-foliage::before,
+.tree-foliage::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tree-foliage::before {
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 40px solid #2d5016;
+  bottom: 20px;
+  left: -25px;
+}
+
+.tree-foliage::after {
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid #3a6b1f;
+  bottom: 0;
+  left: -30px;
+}
+
+@keyframes treeMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100vw); }
+}
+
+/* ===== ÁRVORES ===== */
+.tree {
+  position: absolute;
+  bottom: 0;
+  animation: treeMove 25s linear infinite;
+}
+
+.tree-trunk {
+  width: 12px;
+  height: 40px;
+  background: #8B4513;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.tree-foliage {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tree-foliage::before,
+.tree-foliage::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tree-foliage::before {
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 40px solid #2d5016;
+  bottom: 20px;
+  left: -25px;
+}
+
+.tree-foliage::after {
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid #3a6b1f;
+  bottom: 0;
+  left: -30px;
+}
+
+@keyframes treeMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100vw); }
+}
+
+.clouds {
+  position: absolute;
+  width: 550px;
+  animation: clouds-animations 20s linear infinite;
+  z-index: 2;
+}
+
+/* ===== ARBUSTOS ===== */
+.bush {
+  position: absolute;
+  bottom: 0;
+  animation: bushMove 20s linear infinite;
+}
+
+.bush-part {
+  width: 20px;
+  height: 20px;
+  background: #228B22;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+}
+
+.bush-part:nth-child(1) { left: 0; width: 18px; height: 18px; }
+.bush-part:nth-child(2) { left: 12px; width: 24px; height: 24px; bottom: 3px; }
+.bush-part:nth-child(3) { left: 28px; width: 20px; height: 20px; }
+
+@keyframes bushMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100vw); }
+}
+
+/* ===== FLORES ===== */
+.flower {
+  position: absolute;
+  bottom: 0;
+  animation: flowerMove 30s linear infinite;
+}
+
+.flower-stem {
+  width: 2px;
+  height: 15px;
+  background: #2d5016;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.flower-petals {
+  width: 8px;
+  height: 8px;
+  background: #FF69B4;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 
+    -4px 0 0 #FF1493,
+    4px 0 0 #FF1493,
+    0 -4px 0 #FF1493,
+    0 4px 0 #FF1493;
+}
+
+.flower-center {
+  width: 4px;
+  height: 4px;
+  background: #FFD700;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes flowerMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100vw); }
+}
+
+/* ===== TOUCH ZONE ===== */
+.touch-zone {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* ===== HUD ===== */
+.score-board,
+.ranking-board {
+  position: absolute;
+  top: 20px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  color: #fff;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.score-board {
+  left: 20px;
+  display: flex;
+  gap: 14px;
+  font-size: 20px;
+}
+
+.ranking-board {
+  right: 20px;
+  width: 170px;
+}
+
+.score-board div,
+.ranking-board li {
+  text-shadow: 2px 2px 0 #000;
+}
+
+.ranking-board h4 {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.ranking-board ol {
+  padding-left: 18px;
+}
+
+/* ===== BOTÃO LOJA ===== */
+.shop-button {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.shop-button:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+.shop-button:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+/* ===== MODAIS =====*/
+.game-over-modal,
+.tutorial-overlay,
+.pause-overlay,
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content,
+.tutorial-content,
+.pause-content {
+  background: #1e90ff;
+  padding: 25px 35px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  min-width: 280px;
+  max-width: 90%;
+  animation: modalSlideIn 0.3s ease-out;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== LOJA ===== */
+.shop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(8px);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.shop-content {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.shop-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.shop-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.shop-content h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.shop-coins {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 25px;
+  color: #FFD700;
+}
+
+.shop-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.shop-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.shop-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.shop-item-icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.shop-item h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.shop-item p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #ddd;
+  min-height: 40px;
+}
+
+.shop-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-item-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFD700;
+}
+
+.shop-item-buy {
+  background: #2ecc71;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.shop-item-buy:hover {
+  background: #27ae60;
+}
+
+.shop-item-buy:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.shop-item.owned {
+  border-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.shop-item.active {
+  border-color: #f1c40f;
+  background: rgba(241, 196, 15, 0.15);
+  box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.modal-buttons button,
+#startTutorial,
+#resumeGame,
+#quitGame,
+#confirmName {
+  padding: 14px 22px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  font-weight: bold;
+}
+
+.modal-buttons button:hover,
+#startTutorial:hover,
+#resumeGame:hover,
+#quitGame:hover,
+#confirmName:hover {
+  transform: scale(1.05);
+}
+
+.modal-buttons button:active,
+#startTutorial:active,
+#resumeGame:active,
+#quitGame:active,
+#confirmName:active {
+  transform: scale(0.95);
+}
+
+.modal-buttons button:focus,
+#startTutorial:focus,
+#resumeGame:focus,
+#quitGame:focus,
+#confirmName:focus {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+#restartGame,
+#resumeGame {
+  background: #2ecc71;
+  color: #fff;
+}
+
+#shareGame {
+  background: #f1c40f;
+  color: #000;
+}
+
+#quitGame {
+  background: #e74c3c;
+  color: #fff;
+}
+
+#startTutorial,
+#confirmName {
+  background: #2ecc71;
+  color: #fff;
+  margin-top: 15px;
+  min-width: 150px;
+}
+
+/* ===== LOADING ===== */
+.loading-overlay {
+  background: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+  gap: 20px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== NOTIFICAÇÕES ===== */
+.speed-notification {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(241, 196, 15, 0.95);
+  color: #000;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  z-index: 50;
+  animation: notificationPulse 2s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes notificationPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* ===== PAUSE ===== */
+.pause-content h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.pause-content p {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+/* ===== TUTORIAL ===== */
+.tutorial-content h2 {
+  margin-bottom: 20px;
+}
+
+.tutorial-content p {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ===== INPUT ===== */
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2ecc71;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .shop-button {
+    top: 10px;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  .shop-content {
+    padding: 20px 15px;
+    max-height: 90vh;
+  }
+  
+  .shop-items {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .shop-item {
+    padding: 15px;
+  }
+  
+  .shop-item-icon {
+    font-size: 40px;
+  }
+  
+  .ranking-board {
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    width: 140px;
+    padding: 8px 10px;
+  }
+  
+  .ranking-board h4 {
+    font-size: 14px;
+  }
+  
+  .ranking-board ol {
+    font-size: 11px;
+  }
+
+  .score-board {
+    left: 10px;
+    top: 10px;
+    font-size: 14px;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .modal-content,
+  .tutorial-content,
+  .pause-content {
+    width: 90%;
+    padding: 20px;
+    margin: 0 15px;
+  }
+  
+  .modal-content h2,
+  .tutorial-content h2,
+  .pause-content h2 {
+    font-size: 24px;
+  }
+  
+  .modal-content p,
+  .tutorial-content p,
+  .pause-content p {
+    font-size: 14px;
+  }
+  
+  .modal-buttons button,
+  #startTutorial,
+  #resumeGame,
+  #quitGame,
+  #confirmName {
+    padding: 12px 18px;
+    font-size: 16px;
+  }
+  
+  .speed-notification {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+  
+  /* Toque mais visível */
+  .touch-zone {
+    background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+  }
+}
+
+@media (max-width: 480px) {
+  .pipe {
+    width: 50px;
+  }
+  
+  .mario {
+    width: 120px !important;
+  }
+  
+  .mario.game-over {
+    width: 60px !important;
+  }
+}
+
+/* Bloquear orientação landscape em mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  body::before {
+    content: '❌ Gire seu dispositivo para o modo retrato';
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .game-board,
+  .score-board,
+  .ranking-board {
+    display: none !important;
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes jump {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: 180px;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes clouds-animations {
+  from {
+    right: -500px;
+  }
+  to {
+    right: 100%;
+  }
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Efeito de Poeira (Partículas) */
+.dust {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(48, 46, 46, 0.253); /* Cor branca transparente */
+  border-radius: 50%; /* Faz ser uma bolinha */
+  pointer-events: none; /* Garante que não atrapalhe o clique */
+  z-index: 4;
+  animation: dust-fade 0.5s linear forwards;
+}
+
+@keyframes dust-fade {
+  0% { 
+    transform: scale(1) translateY(0); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(2) translateY(-20px); 
+    opacity: 0; 
+  }
+}

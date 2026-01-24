@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"
+    />
+
+    <title>Mario Jump</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script src="java.js" defer></script>
+  </head>
+  <body>
+    <!-- ===== NOME ===== -->
+    <div class="game-over-modal" id="nameModal" style="display: flex" role="dialog" aria-labelledby="nameModalTitle" aria-modal="true">
+      <div class="modal-content">
+        <h2 id="nameModalTitle">🎮 Mario Jump</h2>
+        <p>Digite seu nome para começar</p>
+
+        <input
+          id="playerNameInput"
+          type="text"
+          maxlength="12"
+          placeholder="Seu nome"
+          aria-label="Nome do jogador"
+          aria-required="true"
+          autocomplete="off"
+        />
+
+        <div class="modal-buttons">
+          <button id="confirmName" aria-label="Confirmar nome e começar o jogo">Começar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HUD ===== -->
+    <div class="score-board" role="status" aria-live="polite">
+      <div>🏃‍♂️ <strong id="score" aria-label="Pontuação atual">0</strong></div>
+      <div>🧱 <strong id="cones" aria-label="Canos pulados">0</strong></div>
+      <div>🏆 <strong id="highScore" aria-label="Recorde pessoal">0</strong></div>
+    </div>
+
+    <!-- ===== RANKING ===== -->
+    <div class="ranking-board" role="complementary" aria-label="Ranking dos melhores jogadores">
+      <h4>🏆 Top 5</h4>
+      <ol id="rankingList" aria-live="polite">
+        <li>Carregando...</li>
+      </ol>
+    </div>
+
+    <!-- ===== GAME ===== -->
+    <div class="game-board" role="main" aria-label="Área do jogo">
+      <!-- Área de toque mobile -->
+      <div class="touch-zone" aria-label="Toque para pular" role="button" tabindex="0"></div>
+
+      <!-- Fundo Procedural -->
+      <div class="background-layer" aria-hidden="true">
+        <div class="mountains-container"></div>
+        <div class="trees-container"></div>
+        <div class="bushes-container"></div>
+      </div>
+
+      <img src="mario.gif" class="mario" alt="Personagem Mario" role="img" />
+      <img src="pipe.png" class="pipe" alt="Obstáculo cano" role="img" />
+      <img src="clouds.png" class="clouds" alt="Nuvens decorativas" role="img" aria-hidden="true" />
+    </div>
+
+    <!-- ===== GAME OVER ===== -->
+    <div class="game-over-modal" id="gameOverModal" role="dialog" aria-labelledby="gameOverTitle" aria-modal="true">
+      <div class="modal-content">
+        <h2 id="gameOverTitle">🏁 Fim de jogo</h2>
+
+        <p>🏃‍♂️ Score: <strong id="finalScore" aria-label="Pontuação final">0</strong></p>
+        <p>🧱 Canos: <strong id="finalCones" aria-label="Total de canos pulados">0</strong></p>
+        <p>🏆 Recorde: <strong id="finalHighScore" aria-label="Seu recorde pessoal">0</strong></p>
+
+        <div class="modal-buttons">
+          <button id="restartGame" aria-label="Reiniciar o jogo">Reiniciar</button>
+          <button id="shareGame" aria-label="Compartilhar resultado">Compartilhar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TUTORIAL ===== -->
+    <div class="tutorial-overlay" id="tutorialOverlay" role="dialog" aria-labelledby="tutorialTitle" aria-modal="true">
+      <div class="tutorial-content">
+        <h2 id="tutorialTitle">🎮 Como Jogar</h2>
+        <p>🖱️ Pressione <strong>ESPAÇO</strong> ou <strong>TOQUE NA TELA</strong> para pular</p>
+        <p>🧱 Desvie dos canos para sobreviver</p>
+        <p>⚡ A velocidade aumenta a cada 10 canos</p>
+        <p>⏸️ Pressione <strong>P</strong> para pausar</p>
+        <button id="startTutorial" aria-label="Iniciar o jogo">Começar!</button>
+      </div>
+    </div>
+
+    <!-- ===== PAUSE ===== -->
+    <div class="pause-overlay" id="pauseOverlay" role="dialog" aria-labelledby="pauseTitle" aria-modal="true">
+      <div class="pause-content">
+        <h2 id="pauseTitle">⏸️ Pausado</h2>
+        <p>Pressione <strong>P</strong> ou clique no botão para continuar</p>
+        <button id="resumeGame" aria-label="Continuar o jogo">Continuar</button>
+        <button id="quitGame" aria-label="Sair do jogo">Sair</button>
+      </div>
+    </div>
+
+    <!-- ===== LOADING ===== -->
+    <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite" aria-label="Carregando ranking">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <p>Carregando ranking...</p>
+    </div>
+  </body>
+</html>
