@@ -47,7 +47,11 @@
       <div>🏃‍♂️ <strong id="score" aria-label="Pontuação atual">0</strong></div>
       <div>🧱 <strong id="cones" aria-label="Canos pulados">0</strong></div>
       <div>🏆 <strong id="highScore" aria-label="Recorde pessoal">0</strong></div>
+      <div>🪙 <strong id="coins" aria-label="Moedas coletadas">0</strong></div>
     </div>
+    
+    <!-- ===== PAUSE BUTTON ===== -->
+    <button id="pauseButton" class="pause-button" aria-label="Pausar jogo">⏸️</button>
 
     <!-- ===== RANKING ===== -->
     <div class="ranking-board" role="complementary" aria-label="Ranking dos melhores jogadores">
@@ -55,6 +59,29 @@
       <ol id="rankingList" aria-live="polite">
         <li>Carregando...</li>
       </ol>
+    </div>
+
+    <!-- ===== INDICADOR DE PODER ATIVO ===== -->
+    <div class="active-power-hud" id="activePowerHud" role="status" aria-live="polite">
+      <span id="activePowerIcon"></span>
+      <span id="activePowerName"></span>
+      <span id="activePowerTimer"></span>
+    </div>
+
+    <!-- ===== INDICADORES DE BENEFÍCIOS ===== -->
+    <div class="benefits-hud" id="benefitsHud">
+      <div class="benefit-item" id="shieldIndicator" style="display: none;">
+        <span class="benefit-icon">🛡️</span>
+        <span class="benefit-name">Escudo</span>
+      </div>
+      <div class="benefit-item" id="reviveIndicator" style="display: none;">
+        <span class="benefit-icon">💚</span>
+        <span class="benefit-name">Reviver</span>
+      </div>
+      <div class="benefit-item" id="checkpointIndicator" style="display: none;">
+        <span class="benefit-icon">💾</span>
+        <span class="benefit-name">Checkpoint</span>
+      </div>
     </div>
 
     <!-- ===== GAME ===== -->
@@ -72,6 +99,9 @@
       <img src="mario.gif" class="mario" alt="Personagem Mario" role="img" />
       <img src="pipe.png" class="pipe" alt="Obstáculo cano" role="img" />
       <img src="clouds.png" class="clouds" alt="Nuvens decorativas" role="img" aria-hidden="true" />
+      
+      <!-- Container para moedas -->
+      <div class="coins-container" id="coinsContainer"></div>
     </div>
 
     <!-- ===== GAME OVER ===== -->
@@ -84,8 +114,99 @@
         <p>🏆 Recorde: <strong id="finalHighScore" aria-label="Seu recorde pessoal">0</strong></p>
 
         <div class="modal-buttons">
+          <button id="useCheckpoint" class="checkpoint-button" style="display: none;" aria-label="Usar checkpoint">💾 Usar Checkpoint</button>
           <button id="restartGame" aria-label="Reiniciar o jogo">Reiniciar</button>
+          <button id="openShopGameOver" class="shop-button" aria-label="Abrir loja">🛒 Loja</button>
           <button id="shareGame" aria-label="Compartilhar resultado">Compartilhar</button>
+        </div>
+      </div>
+      
+      <!-- LOJA NO GAME OVER -->
+      <div class="shop-menu" id="shopMenuGameOver" style="display: none;">
+        <div class="shop-header">
+          <h2>🛒 Loja de Upgrades</h2>
+          <p class="shop-coins">Moedas: <strong id="shopCoinsDisplayGameOver">0</strong> 🪙</p>
+          <button id="closeShopGameOver" class="close-shop">❌</button>
+        </div>
+        
+        <div class="shop-items">
+          <!-- Pulo mais alto -->
+          <div class="shop-item" data-upgrade="highJump" data-context="gameover">
+            <div class="item-icon">⬆️</div>
+            <div class="item-info">
+              <h3>Pulo Mais Alto</h3>
+              <p>Aumenta a altura do pulo</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 10</span>
+                <button class="buy-btn" data-upgrade="highJump" data-context="gameover">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Invencibilidade -->
+          <div class="shop-item" data-upgrade="starPower" data-context="gameover">
+            <div class="item-icon">⭐</div>
+            <div class="item-info">
+              <h3>Estrela Invencível</h3>
+              <p>Invencibilidade por 5s</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 25</span>
+                <button class="buy-btn" data-upgrade="starPower" data-context="gameover">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Voo -->
+          <div class="shop-item" data-upgrade="wingPower" data-context="gameover">
+            <div class="item-icon">🪽</div>
+            <div class="item-info">
+              <h3>Asas de Voo</h3>
+              <p>Voa por 7 segundos</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 22</span>
+                <button class="buy-btn" data-upgrade="wingPower" data-context="gameover">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Escudo -->
+          <div class="shop-item" data-upgrade="shield" data-context="gameover">
+            <div class="item-icon">🛡️</div>
+            <div class="item-info">
+              <h3>Escudo Protetor</h3>
+              <p>Protege de 1 colisão</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 18</span>
+                <button class="buy-btn" data-upgrade="shield" data-context="gameover">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Checkpoint -->
+          <div class="shop-item" data-upgrade="checkpoint" data-context="gameover">
+            <div class="item-icon">💾</div>
+            <div class="item-info">
+              <h3>Checkpoint Portátil</h3>
+              <p>Salva sua pontuação atual</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 35</span>
+                <button class="buy-btn" data-upgrade="checkpoint" data-context="gameover">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Reviver -->
+          <div class="shop-item" data-upgrade="revive" data-context="gameover">
+            <div class="item-icon">💚</div>
+            <div class="item-info">
+              <h3>Reviver Instantâneo</h3>
+              <p>Revive agora e continue! (1 uso)</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 50</span>
+                <button class="buy-btn" data-upgrade="revive" data-context="gameover">Comprar</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -107,8 +228,101 @@
       <div class="pause-content">
         <h2 id="pauseTitle">⏸️ Pausado</h2>
         <p>Pressione <strong>P</strong> ou clique no botão para continuar</p>
-        <button id="resumeGame" aria-label="Continuar o jogo">Continuar</button>
-        <button id="quitGame" aria-label="Sair do jogo">Sair</button>
+        
+        <div class="pause-buttons">
+          <button id="resumeGame" aria-label="Continuar o jogo">Continuar</button>
+          <button id="openShop" class="shop-button" aria-label="Abrir loja">🛒 Loja</button>
+          <button id="quitGame" aria-label="Sair do jogo">Sair</button>
+        </div>
+      </div>
+      
+      <!-- LOJA -->
+      <div class="shop-menu" id="shopMenu" style="display: none;">
+        <div class="shop-header">
+          <h2>🛒 Loja de Upgrades</h2>
+          <p class="shop-coins">Moedas: <strong id="shopCoinsDisplay">0</strong> 🪙</p>
+          <button id="closeShop" class="close-shop">❌</button>
+        </div>
+        
+        <div class="shop-items">
+          <!-- Pulo mais alto -->
+          <div class="shop-item" data-upgrade="highJump">
+            <div class="item-icon">⬆️</div>
+            <div class="item-info">
+              <h3>Pulo Mais Alto</h3>
+              <p>Aumenta a altura do pulo</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 10</span>
+                <button class="buy-btn" data-upgrade="highJump">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Invencibilidade -->
+          <div class="shop-item" data-upgrade="starPower">
+            <div class="item-icon">⭐</div>
+            <div class="item-info">
+              <h3>Estrela Invencível</h3>
+              <p>Invencibilidade por 5s</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 25</span>
+                <button class="buy-btn" data-upgrade="starPower">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Voo -->
+          <div class="shop-item" data-upgrade="wingPower">
+            <div class="item-icon">🪽</div>
+            <div class="item-info">
+              <h3>Asas de Voo</h3>
+              <p>Voa por 7 segundos</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 22</span>
+                <button class="buy-btn" data-upgrade="wingPower">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Escudo -->
+          <div class="shop-item" data-upgrade="shield">
+            <div class="item-icon">🛡️</div>
+            <div class="item-info">
+              <h3>Escudo Protetor</h3>
+              <p>Protege de 1 colisão</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 18</span>
+                <button class="buy-btn" data-upgrade="shield">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Checkpoint -->
+          <div class="shop-item" data-upgrade="checkpoint">
+            <div class="item-icon">💾</div>
+            <div class="item-info">
+              <h3>Checkpoint Portátil</h3>
+              <p>Salva sua pontuação atual</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 35</span>
+                <button class="buy-btn" data-upgrade="checkpoint">Comprar</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Reviver -->
+          <div class="shop-item" data-upgrade="revive">
+            <div class="item-icon">💚</div>
+            <div class="item-info">
+              <h3>Reviver Instantâneo</h3>
+              <p>Revive no mesmo lugar (1 uso)</p>
+              <div class="item-footer">
+                <span class="item-cost">🪙 50</span>
+                <button class="buy-btn" data-upgrade="revive">Comprar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
